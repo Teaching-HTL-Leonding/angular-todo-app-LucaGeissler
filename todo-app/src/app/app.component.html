@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<table style="width:70%" align="center">
+  <tr>
+    <th>Description</th>
+    <th>
+      <select [(ngModel)]="selectedPerson" (change)="updateListPerson()">
+        <option *ngFor="let pers of persons">
+          {{pers}}
+        </option>
+      </select>
+    </th>
+    <th>
+      <select id="finishedState" name="finishedState" [(ngModel)]="selectedState" (change)="updateListState()">
+        <option value="Done">Done</option>
+        <option value="Not Done">Not Done</option>
+        <option value="All">All</option>
+      </select>
+    </th>
+    <th>Edit</th>
+    <th>Delete</th>
+
+  <tr align="center" *ngFor="let item of listToReturn()" >
+    <td>{{item.description}}</td>
+    <td>{{item.assignedTo}}</td>
+    <td>{{item.done | valueOfBool}}</td>
+    <td><button class="btn"><i class="fa fa-pencil"></i></button></td>
+    <td><button class="btn"><i class="fa fa-close"></i></button></td>
+  </tr>
+</table>
+
+
+<router-outlet></router-outlet>
