@@ -15,7 +15,7 @@ class todoTask{
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  public persons = ['All', 'Luca', 'Lotta', 'Florian', 'Elias'];
+  public persons = ['All', 'Luca', 'Lotta'];
 
   public selectedState = 'All';
   public selectedPerson = 'All';
@@ -37,24 +37,32 @@ export class AppComponent {
       return this.todoList;
     } else if (this.selectedState === 'All') {
       return this.returnListName;
-    } else if(this.selectedPerson === 'All'){
+    } else if (this.selectedPerson === 'All') {
       return this.returnListState;
-    }else{
+    } else {
       return this.returnListState.filter(
         (task) => task.assignedTo == this.selectedPerson
-      );;
+      );
     }
   }
 
   public todoList: todoTask[] = [
-    new todoTask('Undone Assignment', 'Luca'),
-    new todoTask('Undone Assignment', 'Lotta'),
-    new todoTask('Undone Assignment', 'Florian'),
-    new todoTask('Undone Assignment', 'Elias'),
-    new todoTask('Finish Assignment', 'Elias', true),
-    new todoTask('Finish Assignment', 'Luca', true),
-    new todoTask('Finish Assignment', 'Florian', true),
-    new todoTask('Finish Assignment', 'Lotta', true),
+    new todoTask('Angular Assignment', 'Luca'),
+    new todoTask('Kotlin Assignment', 'Luca'),
+    new todoTask('Java Assignment', 'Luca'),
+    new todoTask('C# Assignment', 'Luca'),
+    new todoTask('Angular Assignment', 'Lotta'),
+    new todoTask('Kotlin Assignment', 'Lotta'),
+    new todoTask('Java Assignment', 'Lotta'),
+    new todoTask('C# Assignment', 'Lotta'),
+    new todoTask('German Assignment', 'Luca', true),
+    new todoTask('Enlgish Assignment', 'Luca', true),
+    new todoTask('BOBW Assignment', 'Luca', true),
+    new todoTask('RW Assignment', 'Luca', true),
+    new todoTask('German Assignment', 'Lotta', true),
+    new todoTask('Enlgish Assignment', 'Lotta', true),
+    new todoTask('BOBW Assignment', 'Lotta', true),
+    new todoTask('RW Assignment', 'Lotta', true),
   ];
 
   public returnListState: todoTask[] = this.todoList.filter(
