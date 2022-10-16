@@ -5,12 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BooltoStringPipe } from './BooltoString.pipe';
-import { StringtoBoolPipe } from './StringtoBool.pipe';
 
 @NgModule({
   declarations: [AppComponent,
     BooltoStringPipe,
-    StringtoBoolPipe
   ],
   imports: [
     BrowserModule,

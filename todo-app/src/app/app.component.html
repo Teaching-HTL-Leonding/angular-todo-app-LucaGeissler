@@ -8,6 +8,7 @@
         <option *ngFor="let pers of persons">
           {{pers}}
         </option>
+        <option value="All">All</option>
       </select>
     </th>
     <th>
@@ -24,10 +25,32 @@
     <td>{{item.description}}</td>
     <td>{{item.assignedTo}}</td>
     <td>{{item.done | valueOfBool}}</td>
-    <td><button class="btn"><i class="fa fa-pencil"></i></button></td>
-    <td><button class="btn"><i class="fa fa-close"></i></button></td>
+    <td><button class="btn" (click)="edit()"><i class="fa fa-pencil"></i></button></td>
+    <td><button class="btn" (click)="remove(item.description,item.assignedTo)" ><i class="fa fa-close"></i></button></td>
   </tr>
 </table>
+
+<p align="center">Add new task : </p>
+<table style="width:70%" align="center">
+  <tr>
+    <th>Description</th>
+    <th>Assigned to</th>
+    <th>Add</th>
+  </tr>
+  <tr align="center">
+    <td><input type="text" [(ngModel)]="descriptionOfNewTask"  /></td>
+    <td><input list="persons" type="text" [(ngModel)]="assignedPersonOfNewTask"/>
+        <datalist id="persons">
+          <option *ngFor="let pers of persons">
+            {{pers}}
+          </option>
+        </datalist>
+    </td>
+    <td><button class="btn" (click)="add()"><i class="fa fa-plus"></i></button></td>
+  </tr>
+
+
+
 
 
 <router-outlet></router-outlet>
