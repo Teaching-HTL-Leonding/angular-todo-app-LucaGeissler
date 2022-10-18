@@ -25,16 +25,19 @@
     <td>{{item.description}}</td>
     <td>{{item.assignedTo}}</td>
     <td>{{item.done | valueOfBool}}</td>
-    <td><button class="btn" (click)="edit()"><i class="fa fa-pencil"></i></button></td>
+    <td><button mat-button id="editBtn" class="btn" (click)="edit(item.description,item.assignedTo)"><i class="fa fa-edit"></i></button></td>
     <td><button class="btn" (click)="remove(item.description,item.assignedTo)" ><i class="fa fa-close"></i></button></td>
   </tr>
 </table>
 
-<p align="center">Add new task : </p>
+
+
+<p align="center">Add new task or edit a existing one: </p>
 <table style="width:70%" align="center">
   <tr>
     <th>Description</th>
     <th>Assigned to</th>
+    <th>Status</th>
     <th>Add</th>
   </tr>
   <tr align="center">
@@ -46,8 +49,15 @@
           </option>
         </datalist>
     </td>
+    <td>
+        <select id="finishedState" name="finishedState" [(ngModel)]="selectedStateNewTask" (change)="updateListState()">
+          <option value="Done">Done</option>
+          <option value="Not Done">Not Done</option>
+        </select>
+    </td>
     <td><button class="btn" (click)="add()"><i class="fa fa-plus"></i></button></td>
   </tr>
+</table>
 
 
 

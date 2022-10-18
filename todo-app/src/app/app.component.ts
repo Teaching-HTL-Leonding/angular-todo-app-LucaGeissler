@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 class todoTask{
   constructor(
@@ -6,8 +11,8 @@ class todoTask{
     public assignedTo: string,
     public done = false,
   ){}
-
 }
+
 
 @Component({
   selector: 'app-root',
@@ -22,6 +27,9 @@ export class AppComponent {
 
   public descriptionOfNewTask!: string;
   public assignedPersonOfNewTask!: string;
+  public selectedStateNewTask!: string;
+
+  public indexToEdit: number = -1;
 
   public updateListState(): void {
     this.returnListState = this.todoList.filter(
@@ -59,7 +67,7 @@ export class AppComponent {
     new todoTask('Java Assignment', 'Lotta'),
     new todoTask('C# Assignment', 'Lotta'),
     new todoTask('German Assignment', 'Luca', true),
-    new todoTask('English Assignment', 'Luca', true),
+    new todoTask('Enlgish Assignment', 'Luca', true),
     new todoTask('BOBW Assignment', 'Luca', true),
     new todoTask('RW Assignment', 'Luca', true),
     new todoTask('German Assignment', 'Lotta', true),
@@ -84,29 +92,70 @@ export class AppComponent {
     }
   }
 
-  public edit(): void {
-    // this.editing = !this.editing;
+  public edit(desc: string, asTo: string): void {
+    let index = this.todoList.findIndex(
+      (task) => task.description == desc && task.assignedTo == asTo
+    );
+
+    this.descriptionOfNewTask = this.todoList[index].description;
+    this.assignedPersonOfNewTask = this.todoList[index].assignedTo;
+    this.selectedStateNewTask = this.todoList[index].done ? 'Done' : 'Not Done';
+
+    this.indexToEdit = index;
   }
 
-  public remove(desc: string,asTo: string): void {
-
-    let index = this.todoList.findIndex((task) => task.description == desc && task.assignedTo == asTo);
+  public remove(desc: string, asTo: string): void {
+    let index = this.todoList.findIndex(
+      (task) => task.description == desc && task.assignedTo == asTo
+    );
     this.todoList.splice(index, 1);
 
     this.updateListState();
     this.updateListPerson();
 
-    for(let i = 0; i < this.persons.length; i++){
-      if(this.todoList.findIndex((task) => task.assignedTo == this.persons[i]) == -1){
+    this.clearNames();
+  }
+
+  public add(): void {
+
+    if(this.indexToEdit== -1){
+      this.todoList.push(
+        new todoTask(
+          this.descriptionOfNewTask,
+          this.assignedPersonOfNewTask,
+          this.toBool(this.selectedStateNewTask)
+        )
+      );
+
+    }else{
+      this.todoList[this.indexToEdit].done = this.toBool(this.selectedStateNewTask);
+      this.todoList[this.indexToEdit].description = this.descriptionOfNewTask;
+      this.todoList[this.indexToEdit].assignedTo = this.assignedPersonOfNewTask;
+
+      this.indexToEdit = -1;
+    }
+
+    if (this.persons.indexOf(this.assignedPersonOfNewTask) == -1) {
+      this.persons.push(this.assignedPersonOfNewTask);
+    }
+
+    this.clearNames();
+
+    this.descriptionOfNewTask = '';
+    this.assignedPersonOfNewTask = '';
+    this.selectedStateNewTask = '';
+  }
+
+  public clearNames():void{
+    for (let i = 0; i < this.persons.length; i++) {
+      if (
+        this.todoList.findIndex((task) => task.assignedTo == this.persons[i]) ==
+        -1
+      ) {
         this.persons.splice(i, 1);
       }
     }
   }
-
-  public add(): void {
-    this.todoList.push(new todoTask(this.descriptionOfNewTask, this.assignedPersonOfNewTask));
-    if(this.persons.indexOf(this.assignedPersonOfNewTask) == -1){
-      this.persons.push(this.assignedPersonOfNewTask);
-    }
-  }
 }
+
+
